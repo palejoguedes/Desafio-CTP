@@ -1,0 +1,40 @@
+def validaCpf(valor):  
+    
+    listaCpfInvalido = []
+    cpf_invalido = ''
+    for n in range(10):
+        for i in range(11):
+            cpf_invalido += str(n)    
+        listaCpfInvalido.append(cpf_invalido)            
+        cpf_invalido = ''
+
+    if valor in listaCpfInvalido:
+        return False
+
+    if not valor.isdigit() or len(valor) != 11:
+        return False
+
+    cpf_valido = valor[0:9] #Cria lista com os atributos no intervalo com índice entre 0 e 9.
+    base = 10
+    while len(cpf_valido) < 11: #Laço que calcula o dígito.
+        soma = 0
+
+        for n in cpf_valido:
+            soma += int(n) * base
+            base -= 1
+
+        digito = soma % 11 #Calcula resto da soma do laço "for" acima.
+        
+        if digito < 2:
+            digito = 0
+        else:
+            digito = 11 - digito 
+              
+        cpf_valido += str(digito) #Concatena dígito calculado.
+
+        base = 11
+
+    if cpf_valido == valor:
+        return True
+    else:
+        return False
